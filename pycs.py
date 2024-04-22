@@ -9,7 +9,6 @@ from random import choice
 from os import getcwd, remove, rename
 from time import sleep
 from moviepy.editor import *
-from keyboard import is_pressed
 
 # -- values --
 
@@ -86,7 +85,12 @@ def exp_size():
 
 def exp_save():
     sleep(0.5)
-    msg1 = msg.showinfo('How to save','For Save your edited image You just have follow this\n\nMenuBar -> File -> Save\nThan tye full name of image with format\nClick on Save button')
+    msg1 = msg.showinfo('How to save','For Save your edited image You just have follow this\n\nMenuBar -> File -> Save\nThan type full name of image with format\nClick on Save button')
+    sleep(0.5)
+
+def exp_create():
+    sleep(0.5)
+    msg1 = msg.showinfo('How to Create','To Create New Image You just have follow this\n\nEnter width height and colour in the Entry Box as \n(width)x(height)x(colour) and then go to\nMenuBar -> File -> Create\n')
     sleep(0.5)
 
 def exp_crop():
@@ -294,13 +298,21 @@ def fit_pic():
     pic= ImageOps.fit(pic,(int(size[0]), int(size[1])) )
     update_img()
 
-
 def scale_pic():
     global pic
     append_pic()
     pic= ImageOps.scale(pic, float(rate.get()))
     update_img()
 
+def make_pic():
+    global pic
+    append_pic()
+    par = rate.get().split('x')
+    w = int(par[0])
+    h = int(par[1])
+    color = par[2]    
+    pic = Image.new("RGBA",(w, h), color)
+    update_img()
 
 def bright_rate():
     global pic
@@ -656,7 +668,7 @@ def save_gui(*args):
 # --- Variable for root2 ---
 
     vs = StringVar()
-    vs.set('PyImage.jpg')
+    vs.set('PyImage.png')
 
 # --- Widgets for root2 ---
 
@@ -704,6 +716,8 @@ Menu1 = Menu(root,) # main menu
 m1 = Menu(Menu1, tearoff=0,bg='black',fg='#00bfff',font='calibri 9 bold') 
 m1.add_command(label='NEW',command=set_pic) 
 m1.add_separator()
+m1.add_command(label='CREATE',command=make_pic) 
+m1.add_separator()
 m1.add_command(label='INFO',command=info_pic) 
 m1.add_separator()
 m1.add_command(label='SHOW',command=show_pic)
@@ -728,6 +742,8 @@ m2.add_separator()
 m2.add_command(label='Rotate Image',command=exp_rotate)
 m2.add_separator()
 m2.add_command(label='Merge new Image',command=exp_merge)
+m2.add_separator()
+m2.add_command(label='Create Image',command=exp_create)
 m2.add_separator()
 m2.add_command(label='Apply Filter',command=exp_filter)
 m2.add_separator()
