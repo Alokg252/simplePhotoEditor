@@ -199,6 +199,11 @@ def exp_paste():
     msg.showinfo('How to paste image','to paste an image you have to enter new image size and new image position\n\nFormate : (width)x(height),(X)x(Y) in Entry box and press Paste button')
     sleep(0.5)
 
+def exp_scale():
+    sleep(0.5)
+    msg.showinfo('How to scale image','0 > 1 (scale down) and 1 < value (scale up)\nmenubar -> file -> scale')
+    sleep(0.5)
+
 def exp_others():
     sleep(0.5)
     msg.showinfo('How to apply simple editig','you can change image Brightness, Color, Contrast, Sharpness and Blurness\nBy entring Rate of change in Entry box \n\n rate 1 will remain the image same and 0 will remove that proprty from the image as you decrease rate from 1 to 0 that property will decrease and\nas you increase value from 1 that property will be increase ')
@@ -867,6 +872,8 @@ m2.add_separator()
 m2.add_command(label='Paste Image',command=exp_paste)
 m2.add_separator()
 m2.add_command(label='Use Border',command=exp_border)
+m2.add_separator()
+m2.add_command(label='use Scale',command=exp_scale)
 m2.add_separator()
 m2.add_command(label='Other Helps',command=exp_others)
 
