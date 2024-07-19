@@ -636,15 +636,16 @@ def text_pic():
 
     text_color_picker = Button(root1,textvariable=color_now,font='calibri 10 bold',bg=color_now.get(),width=18, command=choose_color) 
 
-# -- Combobox dropdown For Fonts
+# -- Combobox dropdown For Fonts and Styling --
 
     style = Style()
-    style.theme_use("clam")
-    style.configure('TCombobox',background='#222',selectbackground="black",selectforeground="gray",foreground='gray',borderwidth=2, state='readonly', fieldbackground="black")
-    style.map('TCombobox', selectbackground=[('hover','black')],selectforeground=[('hover','gray')],foreground=[('hover','gray')],background=[('hover','black')],arrowcolor=[('hover','#00bfff')])
+    style.theme_use(themename='clam')
+    style.configure('TCombobox',background='#222',selectbackground="black",selectforeground="gray",foreground='gray', fieldbackground="black")
+    style.map('TCombobox', selectbackground=[('readonly','black')],selectforeground=[('readonly','gray')],foreground=[('readonly','gray')],background=[('readonly','black')],fieldbackground=[('readonly','black')],arrowcolor=[('hover','#00bfff')])
 
-    i5 = Combobox(root1, values=fonts_list, font="calibri 10 bold", style='TCombobox', width=18)
+    i5 = Combobox(root1, values=fonts_list, font="calibri 10 bold", width=18)
     i5.set(fonts_list[0])
+    i5.state(['readonly'])
 
 # -- Packing root1 widgets --
 
@@ -686,7 +687,7 @@ def from_web(*args):
             
             update_new_img()
 
-        except EXCEPTION as e:
+        except Exception as e:
             msg.showerror("Cannot Open",e)
         
         finally:
@@ -740,22 +741,19 @@ def set_pic(*args):
 
 
 def save_gui(*args):
-    global pic
-
 
 # --- Functions for root2 ---
 
     def save_pic():
-        global pic
         
         try:
             pic.save(vs.get())
-            root2.destroy()
             msg.showinfo('Image Saved',f'{vs.get()} Saved Successfully')
-        except EXCEPTION as e:
+        except Exception as e:
+            msg.showerror("Cannot Save",f"{e}\n try converting to RGB or try another formate")
+        finally:
             root2.destroy()
-            msg.showerror("Cannot Save",e)
-
+        
         sleep(0.8)
 
 # --- Activating root2 ---
@@ -947,10 +945,14 @@ def set_hex():
             text_color_picker.config(bg=hex.get())
         except Exception:
             pass
+
+        try:
+            color_now.set(hex.get())
+        except Exception as e:
+            msg.showerror('Invalid Hex','Re-Check the color hex code and try again')
         
-        color_now.set(hex.get())
         root6.destroy()
-    
+
 
     # --- Activating root6 ---
 
